@@ -6,7 +6,7 @@ PeeStream uses ffprobe to identify/cache the lengths of files for EPG data. Yes,
 
 # usage
 You'll want an API key from TVDB to download/cache clearart for the m3u. You'll want nginx. You'll want to make a tmpfs in a publicly accessible location (for the HLS chunks).
-First, run ./make247.sh against a folder and specify a category (for the M3U playlist). It'll create a text file of all of the media files in that folder/subfolder, sorted in order, create a systemd service, enable the systemd service, start the systemd service, add itself to the specified m3u.
+First, run ./make247.sh against a folder and specify a category (for the M3U playlist). It'll create a text file of all of the media files in that folder/subfolder, sorted in order, create a systemd service, enable the systemd service, start the systemd service, add itself to the specified m3u.<br>
 This runs ./stream.sh (with an optional shuffle mode called with -s) that caches the lengths of each file (to avoid hammering the drive) and uses that to create an EPG XML (default is 96 hours) and will non-destructively add itself to an existing XML.
 
 # limitations
