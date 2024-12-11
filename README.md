@@ -19,6 +19,3 @@ Figuring out subtitle logic (embedded, external, en, eng, English, etc) is on th
 A stream manager. Currently, each stream has to be started/stopped as individual systemd services. I don't like this, scales poorly. Restarting 40 streams is annoying. The goal is to create a basic wrapper with a startall stopall restartall option that acts as a front-end at some point.<br>
 Improving the resume functionality. Currently it caches the last played file to a text file in the hls directory (to avoid hammering my SSD with a bunch of tiny writes), so resuming only restarts the previous file it stopped on. This is just so modifying the script didn't restart all of my shows to season 1 episode 1 every frikkin time I changed something.<br>
 I will wrap hlsclean.sh into the main loop logic to keep track of the chunks ffmpeg "forgot" to delete, but for now, just run that as a systemd every 15 minutes or so to keep the tmpfs from filling up with old stale chunks.
-code {
-  white-space : pre-wrap !important;
-}
