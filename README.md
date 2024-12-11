@@ -17,7 +17,8 @@ HLS only supports webvtt, and only one track, so no subtitles (yet?).
 There was a live audio transcode with cache using fifo pipes so it only needed to transcode the audio once and stored the result, losslessly remuxing it in with the original. This was buggy and prone to crashing, so it was removed for now. I want to bring it back, but.. We'll see.<br>
 Figuring out subtitle logic (embedded, external, en, eng, English, etc) is on the to-do list, but I'm not ready to tackle that yet.<br>
 A stream manager. Currently, each stream has to be started/stopped as individual systemd services. I don't like this, scales poorly. Restarting 40 streams is annoying. The goal is to create a basic wrapper with a startall stopall restartall option that acts as a front-end at some point.<br>
-Improving the resume functionality. Currently it caches the last played file to a text file in the hls directory (to avoid hammering my SSD with a bunch of tiny writes), so resuming only restarts the previous file it stopped on. This is just so modifying the script didn't restart all of my shows to season 1 episode 1 every frikkin time I changed something.
+Improving the resume functionality. Currently it caches the last played file to a text file in the hls directory (to avoid hammering my SSD with a bunch of tiny writes), so resuming only restarts the previous file it stopped on. This is just so modifying the script didn't restart all of my shows to season 1 episode 1 every frikkin time I changed something.<br>
+I will wrap hlsclean.sh into the main loop logic to keep track of the chunks ffmpeg "forgot" to delete, but for now, just run that as a systemd every 15 minutes or so to keep the tmpfs from filling up with old stale chunks.
 code {
   white-space : pre-wrap !important;
 }
