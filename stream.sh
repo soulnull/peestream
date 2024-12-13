@@ -342,6 +342,9 @@ echo "HLS output: $HLS_DIR"
 [ "$SHUFFLE" = true ] && echo "Shuffle mode enabled."
 echo "Original playlist entries: $(grep -v '^[[:space:]]*$' "$PLAYLIST" | wc -l)"
 
+# Create last_played file
+touch "${HLS_DIR}/${STREAM_NAME}_last_played.txt"
+
 LAST_EPG_SYNC_CHECK=$(date +%s)  # Initialize the timestamp
 
 while true; do
@@ -391,8 +394,10 @@ while true; do
         PLAYBACK_INDEX=$((PLAYBACK_INDEX+1))
     done < "$PLAYBACK_PLAYLIST"
 
+    # Reset start_index and clear the last_played file
     start_index=0
-    :> "${HLS_DIR}/${STREAM_NAME}_last_played.txt"
+    > "${HLS_DIR}/${STREAM_NAME}_last_played.txt" # Method 1 - Truncate File
+    #rm "${HLS_DIR}/${STREAM_NAME}_last_played.txt" # Method 2 - Delete File (ONLY USE ONE OF THESE)
 
     echo "Playlist completed. Checking EPG buffer..."
     current_epg_duration=$(get_total_epg_duration)
@@ -402,4 +407,5 @@ while true; do
     fi
 
     echo "Starting next streaming cycle..."
+
 done
