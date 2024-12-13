@@ -391,6 +391,9 @@ while true; do
         PLAYBACK_INDEX=$((PLAYBACK_INDEX+1))
     done < "$PLAYBACK_PLAYLIST"
 
+    start_index=0
+    :> "${HLS_DIR}/${STREAM_NAME}_last_played.txt"
+
     echo "Playlist completed. Checking EPG buffer..."
     current_epg_duration=$(get_total_epg_duration)
     if [ "$current_epg_duration" -lt $((EPG_BUFFER_HOURS * 3600)) ]; then
